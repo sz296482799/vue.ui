@@ -3,9 +3,7 @@ function _LISTVIEW(){
 	_VIEW_GROUP.call(this);
 
 	this.data = function() {
-		var mData = _VIEW_GROUP.getData();
-		mData.type = "LIST";
-		return mData;
+		return _LISTVIEW.getData();;
 	};
 
 	this.methods.bindList = function () {
@@ -71,5 +69,10 @@ function _LISTVIEW(){
 	};
 }
 externObj(_LISTVIEW, _VIEW_GROUP);
+_LISTVIEW.getData = function() {
+	var data = _VIEW_GROUP.getData();
+	data.type = "LIST";
+	return data;
+}
 
 Vue.component('item-listview', new _LISTVIEW());

@@ -14,12 +14,6 @@ function APP_VIEW(el, fristView, components) {
 
 	this.components = components;
 
-	this.methods.change = function () {
-		if (this.currentView === "home") {
-		
-		}
-	};
-
 	this.created = function () {
 		document.onkeyup = this.onSuperKeyUp;
 		document.onkeydown = this.onSuperKeyDown;

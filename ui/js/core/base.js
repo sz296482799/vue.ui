@@ -6,7 +6,6 @@ KeyEvent.KEY_RIGHT = 39;
 
 function _VIEW() {
 
-	
 	this.data = function () {
 		return _VIEW.getData();
 	};
@@ -49,7 +48,7 @@ function _VIEW_GROUP() {
 	_VIEW.call(this);
 
 	this.data = function () {
-		return _VIEW_GROUP.mData();
+		return _VIEW_GROUP.getData();
 	};
 
 	this.methods.tryFource = function () {
@@ -86,7 +85,7 @@ function _VIEW_ACTIVEITY() {
 	_VIEW_GROUP.call(this);
 
 	this.data = function () {
-		return _VIEW_ACTIVEITY().mData();
+		return _VIEW_ACTIVEITY().getData();
 	};
 
 	this.methods.touchFource = function(type) {
@@ -144,9 +143,22 @@ function _VIEW_ACTIVEITY() {
 		}
 		return false;
 	};
+	this.methods.requestFocus = function(context) {
+		if(context.tryFource) {
+			var item = context.tryFource();
+			if(item) {
+				this.curFource = item;
+				return true;
+			}
+		}
+		return false;
+	};
 
 	this.mounted = function () {
 		this.curFource = this.tryFource();
+		this.$on('requestFocus', function(event) {
+			return event;
+		});
 	};
 
 	this.watch = {
@@ -168,6 +180,10 @@ _VIEW_ACTIVEITY.getData = function() {
 
 function _VIEW_APP() {
 	_VIEW_GROUP.call(this);
+
+	this.data = function () {
+		return _VIEW_APP().getData();
+	};
 }
 externObj(_VIEW_APP, _VIEW_GROUP);
 _VIEW_APP.getData = function() {

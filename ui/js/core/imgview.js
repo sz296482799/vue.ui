@@ -3,9 +3,7 @@ function _IMGVIEW(){
 	_VIEW.call(this);
 
 	this.data = function() {
-		var mData = _VIEW.getData();
-		mData.type = "IMG";
-		return mData;
+		return _IMGVIEW.getData();
 	};
 
 	this.template = '<img :src="isrc"></img>';
@@ -13,5 +11,10 @@ function _IMGVIEW(){
 	
 }
 externObj(_IMGVIEW, _VIEW);
+_IMGVIEW.getData = function() {
+	var data = _VIEW.getData();
+	data.type = "IMG";
+	return data;
+}
 
 Vue.component('item-imgview', new _IMGVIEW());
