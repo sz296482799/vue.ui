@@ -1,37 +1,35 @@
 
 function COM_ITEM(src, text, isFource) {
-	_VIEW_GROUP.call(this);
-
+	
+	this.extends = new _VIEW_GROUP();
 	this.data = function () {
-		var mData = _VIEW_GROUP.getData();
-
-		mData.type = "HOME_ITEM";
-
-		mData.isrc = src;
-		mData.itext = text;
-		mData.itemclass = "list_icon";
-		mData.imgclass = "in_pic";
-		mData.textclass = "list_text";
-		mData.imgstyle = {};
-		mData.textstyle = {};
-
-		if(typeof isFource !== 'undefined')
-			mData.canFource = isFource;
-		else
-			mData.canFource = true;
-		return mData;
+		if(typeof isFource === 'undefined')
+			isFource = true;
+		return {
+			type: "HOME_ITEM",
+			isrc: src,
+			itext: text,
+			itemclass: "list_icon",
+			imgclass: "in_pic",
+			textclass: "list_text",
+			imgstyle: {},
+			textstyle: {},
+			canFource: isFource,
+		};
 	};
 
-	this.methods.setFource = function(isTrue) {
-		if(isTrue) {
-			this.imgstyle = { "borderColor": "rgb(228, 106, 0)"};
-			this.textstyle = { "color": "rgb(228, 106, 0)"};
+	this.methods = {
+		setFource: function (isTrue) {
+			if(isTrue) {
+				this.imgstyle = { "borderColor": "rgb(228, 106, 0)"};
+				this.textstyle = { "color": "rgb(228, 106, 0)"};
+			}
+			else {
+				this.imgstyle = {};
+				this.textstyle = {};
+			}
+			return true;
 		}
-		else {
-			this.imgstyle = {};
-			this.textstyle = {};
-		}
-		return true;
 	};
 
 	this.template = '\
@@ -41,54 +39,38 @@ function COM_ITEM(src, text, isFource) {
 	</div>\
 	';
 }
-externObj(COM_ITEM, _VIEW_GROUP);
 
 function COM_LIST(items) {
-	_VIEW_GROUP.call(this);
-
-	this.data = function() {
-		var mData = _VIEW_GROUP.getData();
-
-		mData.type = "HOME_LIST";
-		mData.items = items;
-		mData.itype = 'horizontal';
-		return mData;
+	this.extends = new _LIST_VIEW();
+	this.data = function () {
+		return {
+			type: "HOME_LIST",
+			mItems: items,
+			mType: 'horizontal',
+		};
 	};
-
-	this.mounted = function () {
-		this.$emit('requestFocus', this);
-	};
-
-	this.template = '\
-	<div>\
-		<item-listview :itype="itype" :items="items"></item-listview>\
-	</div>\
-	';
 }
-externObj(COM_LIST, _VIEW_GROUP);
 
 function HOME_VIEW(configs) {
-	_VIEW_ACTIVEITY.call(this);
- 
-	this.data = function() {
-		var mData = _VIEW_ACTIVEITY.getData();
 
-		mData.type = "HOME";
-		mData.textclass = "common_text";
-		mData.ftextclass = "focus_text";
-		mData.startIndex = 0;
-		mData.maxItem = 7;
-
-		mData.items = new Array();
+	this.extends = new _VIEW_ACTIVEITY();
+	this.data = function () {
+		var items = new Array();
 		for (var i = 0; i < configs.length; i++) {
-			mData.items[i] = new Object();
+			items[i] = new Object();
 			if(configs[i].name)
-				mData.items[i].itext = configs[i].name;
+				items[i].itext = configs[i].name;
 			if(configs[i].items)
-				mData.items[i].list = new COM_LIST(configs[i].items);
+				items[i].list = new COM_LIST(configs[i].items);
 		}
-
-		return mData;
+		return {
+			type: "HOME",
+			textclass: "common_text",
+			ftextclass: "focus_text",
+			startIndex: 0,
+			maxItem: 7,
+			items: items,
+		};
 	};
 
 	this.computed = {
@@ -97,8 +79,8 @@ function HOME_VIEW(configs) {
 			var fItems = new Array();
 			for (var i = 0; i < this.items.length; i++) {
 				fItems.push(this.items[(this.startIndex + i + 3) % this.items.length]);
-            }
-            Vue.nextTick(function () {
+			}
+			Vue.nextTick(function () {
 				if(this.$refs.profile[0].tryFource) {
 					var item = this.$refs.profile[0].tryFource();
 					if(item) {
@@ -106,27 +88,29 @@ function HOME_VIEW(configs) {
 					}
 				}
 			}, this);
-            return fItems.slice(0, this.maxItem);
+			return fItems.slice(0, this.maxItem);
 		},
 	};
 
-	this.methods.onKeyUp = function(event) {
-		return this.onSuperKeyUp(event);
-	};
-	this.methods.onKeyDown = function(event) {
-		var code = event.keyCode;
+	this.methods = {
+		onKeyUp: function(event) {
+			return this.onSuperKeyUp(event);
+		},
+		onKeyDown: function(event) {
+			var code = event.keyCode;
 
-		switch(code) {
-			case KeyEvent.KEY_DOWN:
-				this.startIndex = (this.startIndex + 1) % this.items.length;
-				return true;
-			break;
-			case KeyEvent.KEY_UP:
-				this.startIndex = (this.startIndex > 0) ? (this.startIndex - 1) : (this.items.length - 1);
-				return true;
-			break;
-		}
-		return this.onSuperKeyDown(event);
+			switch(code) {
+				case KeyEvent.KEY_DOWN:
+					this.startIndex = (this.startIndex + 1) % this.items.length;
+					return true;
+				break;
+				case KeyEvent.KEY_UP:
+					this.startIndex = (this.startIndex > 0) ? (this.startIndex - 1) : (this.items.length - 1);
+					return true;
+				break;
+			}
+			return this.onSuperKeyDown(event);
+		},
 	};
 
 	this.template = '\
@@ -161,7 +145,6 @@ function HOME_VIEW(configs) {
 	</div>\
 	';
 }
-externObj(HOME_VIEW, _VIEW_ACTIVEITY);
 
 var program_config = {
 	name: '節目表',

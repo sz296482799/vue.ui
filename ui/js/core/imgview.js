@@ -1,20 +1,13 @@
 
-function _IMGVIEW(){
-	_VIEW.call(this);
+function _IMG_VIEW(){
 
-	this.data = function() {
-		return _IMGVIEW.getData();
+	this.extends = new _VIEW();
+	this.data = function () {
+		return {
+			type: 'IMG_VIEW',
+		};
 	};
-
 	this.template = '<img :src="isrc"></img>';
 	this.props = ['isrc'];
-	
 }
-externObj(_IMGVIEW, _VIEW);
-_IMGVIEW.getData = function() {
-	var data = _VIEW.getData();
-	data.type = "IMG";
-	return data;
-}
-
-Vue.component('item-imgview', new _IMGVIEW());
+Vue.component('item-imgview', new _IMG_VIEW());

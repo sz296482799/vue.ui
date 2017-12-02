@@ -1,27 +1,21 @@
 
 function APP_VIEW(el, fristView, components) {
-	_VIEW_APP.call(this);
- 
+	
+	this.extends = new _VIEW_APP();
 	this.data = function () {
-		var mData = _VIEW_APP.getData();
-
-		mData.type = "APP";
-		mData.currentView = fristView;
-		return mData;
+		return {
+			type: 'APP_VIEW',
+			currentView: fristView,
+		};
 	};
-
 	this.el = el;
-
 	this.components = components;
 
 	this.created = function () {
 		document.onkeyup = this.onSuperKeyUp;
 		document.onkeydown = this.onSuperKeyDown;
 	};
-
-	
 }
-externObj(APP_VIEW, _VIEW_APP);
 
 var app = new Vue(new APP_VIEW('#app', 'home', {
 		home: com_home,
