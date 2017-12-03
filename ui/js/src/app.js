@@ -12,8 +12,8 @@ function APP_VIEW(el, fristView, components) {
 	this.components = components;
 
 	this.created = function () {
-		document.onkeyup = this.onSuperKeyUp;
-		document.onkeydown = this.onSuperKeyDown;
+		document.onkeyup = this.onAppKeyUp;
+		document.onkeydown = this.onAppKeyDown;
 	};
 }
 

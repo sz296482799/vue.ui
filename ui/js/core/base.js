@@ -8,34 +8,32 @@ function _VIEW() {
 
 	this.data = function () {
 		return {
-			type: 'VIEW',
+			vtype: 'VIEW',
 		};
 	};
 	
 	this.methods = {
-		onSuperKeyUp: function(event) {
-			for (var i = 0; i < this.$children.length; i++) {
-				if(this.$children[i].onKeyUp && this.$children[i].onKeyUp(event)) {
-					return true;
-				}
-				else if(this.$children[i].onSuperKeyUp && this.$children[i].onSuperKeyUp(event)) {
-					return true;
-				}
-			}
-			return this.onKeyUpDef && this.onKeyUpDef(event);
-		},
-		onSuperKeyDown: function(event) {
-			for (var i = 0; i < this.$children.length; i++) {
-				if(this.$children[i].onKeyDown && this.$children[i].onKeyDown(event)) {
-					return true;
-				}
-				else if(this.$children[i].onSuperKeyDown && this.$children[i].onSuperKeyDown(event)) {
-					return true;
-				}
-			}
-			return this.onKeyDownDef && this.onKeyDownDef(event);
-		},
 		setFource: function(isTure) {
+			return false;
+		},
+		getApp: function() {
+			return this.$root;
+		},
+		getActiveity: function() {
+			var app = this.getApp() || this;
+			for (var i = 0; i < app.$children.length; i++) {
+				if(app.$children[i].vtype === "VIEW_ACTIVEITY") {
+					return app.$children[i];
+				}
+			}
+			return null;
+		},
+		requestFocus: function() {
+			var activeity = this.getActiveity();
+			if(activeity) {
+				activeity.$emit('requestFocus', this);
+				return true;
+			}
 			return false;
 		},
 	};
@@ -46,6 +44,7 @@ function _VIEW_GROUP() {
 	this.extends = new _VIEW();
 	this.data = function () {
 		return {
+			vtype: 'VIEW_GROUP',
 			indexFource: -1,
 		};
 	};
@@ -81,11 +80,13 @@ function _VIEW_ACTIVEITY() {
 	this.extends = new _VIEW_GROUP();
 	this.data = function () {
 		return {
+			vtype: 'VIEW_ACTIVEITY',
 			curFource: null,
 		};
 	};
 
 	this.methods = {
+
 		touchFource: function(type) {
 			if(!this._isMounted) {
 				return false;
@@ -118,8 +119,36 @@ function _VIEW_ACTIVEITY() {
 			}
 			return true;
 		},
+		touchOnKeyUp: function(event) {
+			if(!this._isMounted) {
+				return false;
+			}
+			var curFource = this.curFource;
+
+			while(curFource) {
+				if(curFource.onKeyUp && curFource.onKeyUp(event)) {
+					return true;
+				}
+				curFource = curFource.$parent;
+			}
+			return false;
+		},
+		touchOnKeyDown: function(event) {
+			if(!this._isMounted) {
+				return false;
+			}
+			var curFource = this.curFource;
+
+			while(curFource) {
+				if(curFource.onKeyDown && curFource.onKeyDown(event)) {
+					return true;
+				}
+				curFource = curFource.$parent;
+			}
+			return false;
+		},
 		onKeyUpDef: function(event) {
-		
+			return false;
 		},
 		onKeyDownDef: function(event) {
 			var code = event.keyCode;
@@ -150,6 +179,12 @@ function _VIEW_ACTIVEITY() {
 			}
 			return false;
 		},
+		onActiveityKeyUp: function(event) {
+			return this.touchOnKeyUp(event) || this.onKeyUpDef(event);
+		},
+		onActiveityKeyDown: function(event) {
+			return this.touchOnKeyDown(event) || this.onKeyDownDef(event);
+		},
 	};
 
 	this.mounted = function () {
@@ -169,5 +204,27 @@ function _VIEW_ACTIVEITY() {
 }
 
 function _VIEW_APP() {
+	this.data = function () {
+		return {
+			vtype: 'VIEW_APP',
+		};
+	};
+	this.methods = {
+
+		onAppKeyUp: function(event) {
+			var activeity = this.getActiveity();
+			if(activeity) {
+				return activeity.onActiveityKeyUp(event);
+			}
+			return false;
+		},
+		onAppKeyDown: function(event) {
+			var activeity = this.getActiveity();
+			if(activeity) {
+				return activeity.onActiveityKeyDown(event);
+			}
+			return false;
+		},
+	};
 	this.extends = new _VIEW_GROUP();
 }

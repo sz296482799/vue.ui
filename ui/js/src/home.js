@@ -40,7 +40,7 @@ function COM_ITEM(src, text, isFource) {
 	';
 }
 
-function COM_LIST(items) {
+function COM_LIST(items, isKeepAlive) {
 	this.extends = new _LIST_VIEW();
 	this.data = function () {
 		return {
@@ -49,19 +49,30 @@ function COM_LIST(items) {
 			mType: 'horizontal',
 		};
 	};
+
+	var func = function () {
+		this.requestFocus();
+	};
+	if(isKeepAlive) {
+		this.activated = func;
+	}
+	else {
+		this.mounted = func;
+	}
 }
 
 function HOME_VIEW(configs) {
 
 	this.extends = new _VIEW_ACTIVEITY();
 	this.data = function () {
+		var isKeepAlive = false;
 		var items = new Array();
 		for (var i = 0; i < configs.length; i++) {
 			items[i] = new Object();
 			if(configs[i].name)
 				items[i].itext = configs[i].name;
 			if(configs[i].items)
-				items[i].list = new COM_LIST(configs[i].items);
+				items[i].list = new COM_LIST(configs[i].items, isKeepAlive);
 		}
 		return {
 			type: "HOME",
@@ -70,6 +81,7 @@ function HOME_VIEW(configs) {
 			startIndex: 0,
 			maxItem: 7,
 			items: items,
+			isKeepAlive: isKeepAlive,
 		};
 	};
 
@@ -80,22 +92,11 @@ function HOME_VIEW(configs) {
 			for (var i = 0; i < this.items.length; i++) {
 				fItems.push(this.items[(this.startIndex + i + 3) % this.items.length]);
 			}
-			Vue.nextTick(function () {
-				if(this.$refs.profile[0].tryFource) {
-					var item = this.$refs.profile[0].tryFource();
-					if(item) {
-						this.curFource = item;
-					}
-				}
-			}, this);
 			return fItems.slice(0, this.maxItem);
 		},
 	};
 
 	this.methods = {
-		onKeyUp: function(event) {
-			return this.onSuperKeyUp(event);
-		},
 		onKeyDown: function(event) {
 			var code = event.keyCode;
 
@@ -109,7 +110,7 @@ function HOME_VIEW(configs) {
 					return true;
 				break;
 			}
-			return this.onSuperKeyDown(event);
+			return false;
 		},
 	};
 
@@ -135,9 +136,14 @@ function HOME_VIEW(configs) {
 		<div v-for="(item, index) in filteredItems" :key="index">\
 			<template v-if="index == 5">\
 				<item-textview :itext="item.itext" :class="ftextclass"></item-textview>\
-				<keep-alive>\
-		    		<component :is="item.list" ref="profile" ></component>\
-				</keep-alive>\
+				<template v-if="isKeepAlive">\
+					<keep-alive>\
+			    		<component :is="item.list" ref="profile" ></component>\
+					</keep-alive>\
+				</template>\
+				<template v-else >\
+			    	<component :is="item.list" ref="profile" ></component>\
+				</template>\
 			</template>\
     		<item-textview v-else :itext="item.itext" :class="textclass"></item-textview>\
     	</div>\
