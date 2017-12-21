@@ -1,3 +1,4 @@
+'use strict'
 
 function APP_VIEW(el, fristView, components) {
 	
@@ -5,20 +6,15 @@ function APP_VIEW(el, fristView, components) {
 	this.data = function () {
 		return {
 			type: 'APP_VIEW',
-			currentView: fristView,
+			currentView: fristView
 		};
 	};
 	this.el = el;
 	this.components = components;
-
-	this.created = function () {
-		document.onkeyup = this.onAppKeyUp;
-		document.onkeydown = this.onAppKeyDown;
-	};
 }
 
-var app = new Vue(new APP_VIEW('#app', 'home', {
+const app = new Vue(new APP_VIEW('#app', 'home', {
 		home: com_home,
-		posts: { template: '<p>Welcome posts!</p>' },
+		setting: com_setting,
 		archive: { template: '<p>Welcome archive!</p>' },
 	}));

@@ -1,3 +1,4 @@
+'use strict'
 
 function _TEXT_VIEW(){
 	

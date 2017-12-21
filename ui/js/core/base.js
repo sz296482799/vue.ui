@@ -1,8 +1,11 @@
-KeyEvent = {};
+'use strict'
+
+var KeyEvent = new Object();
 KeyEvent.KEY_UP = 38;
 KeyEvent.KEY_DOWN = 40;
 KeyEvent.KEY_LEFT = 37;
 KeyEvent.KEY_RIGHT = 39;
+KeyEvent.KEY_TEST = 37;
 
 function _VIEW() {
 
@@ -204,9 +207,12 @@ function _VIEW_ACTIVEITY() {
 }
 
 function _VIEW_APP() {
+
+	this.extends = new _VIEW_GROUP();
 	this.data = function () {
 		return {
 			vtype: 'VIEW_APP',
+			currentView: '',
 		};
 	};
 	this.methods = {
@@ -225,6 +231,13 @@ function _VIEW_APP() {
 			}
 			return false;
 		},
+		selectPage: function(page) {
+			this.currentView = page;
+		},
 	};
-	this.extends = new _VIEW_GROUP();
+
+	this.created = function () {
+		document.onkeyup = this.onAppKeyUp;
+		document.onkeydown = this.onAppKeyDown;
+	};
 }
