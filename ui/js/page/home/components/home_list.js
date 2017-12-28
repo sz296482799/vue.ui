@@ -7,6 +7,7 @@ function HOME_LIST(items, isKeepAlive) {
 			type: "HOME_LIST",
 			mItems: items,
 			mType: 'horizontal',
+			mClass: 'home_table',
 		};
 	};
 

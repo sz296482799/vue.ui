@@ -50,7 +50,7 @@ function HOME_VIEW(configs) {
 					return true;
 				break;
 				case KeyEvent.KEY_TEST:
-					this.getApp().selectPage("setting");
+					this.toPage("setting/advset");
 					return true;
 			}
 			return false;
@@ -74,6 +74,11 @@ function HOME_VIEW(configs) {
 				</template>\
 			</template>\
     		<item-textview v-else :itext="item.itext" :class="textclass"></item-textview>\
+    	</div>\
+    	<div class="home_fource_list">\
+    		<div class="home_left_arr" class="home_up_arr"></div>\
+    		<item-imgview isrc="img/arrow_left.gif" class="home_left_arr" ></item-imgview>\
+			<item-imgview isrc="img/arrow_right.gif" class="home_right_arr" ></item-imgview>\
     	</div>\
 	</div>\
 	</div>\

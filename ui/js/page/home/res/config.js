@@ -11,6 +11,8 @@ var vod_config = {
 		{com: new HOME_ITEM("img/1_2.png", '影片排行榜')},
 		{com: new HOME_ITEM("img/1_3.png", '影片搜尋')},
 		{com: new HOME_ITEM("img/1_4.png", '播放清單')},
+		{com: new HOME_ITEM("img/1_5.png", '系統設定')},
+		{com: new HOME_ITEM("img/1_5.png", '系統設定')},
 		{com: new HOME_ITEM("img/1_5.png", '系統設定')}
 	],
 };

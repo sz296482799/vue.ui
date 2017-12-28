@@ -172,8 +172,8 @@ function _VIEW_ACTIVEITY() {
 			}
 			return false;
 		},
-		requestFocus: function(context) {
-			if(context.tryFource) {
+		_requestFocus: function(context) {
+			if(context && context.tryFource) {
 				var item = context.tryFource();
 				if(item) {
 					this.curFource = item;
@@ -188,11 +188,17 @@ function _VIEW_ACTIVEITY() {
 		onActiveityKeyDown: function(event) {
 			return this.touchOnKeyDown(event) || this.onKeyDownDef(event);
 		},
+		getRoute: function(path) {
+			return this.$router;
+		},
+		toPage: function(path) {
+			this.getRoute().push(path);
+		},
 	};
 
 	this.mounted = function () {
 		this.curFource = this.tryFource();
-		this.$on('requestFocus', this.requestFocus);
+		this.$on('requestFocus', this._requestFocus);
 	};
 
 	this.watch = {
@@ -230,9 +236,6 @@ function _VIEW_APP() {
 				return activeity.onActiveityKeyDown(event);
 			}
 			return false;
-		},
-		selectPage: function(page) {
-			this.currentView = page;
 		},
 	};
 

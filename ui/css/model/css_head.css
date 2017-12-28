@@ -1,4 +1,10 @@
-
+.head_class {
+  position: absolute;
+  top: 40px;
+  left: 80px;
+  width: 1120px;
+  height: 50px;
+}
 .title {
   position: absolute;
   top: 0px;
@@ -13,7 +19,7 @@
 }
 .time {
   float: right;
-  margin-top: 25px;
+  margin-top: 20px;
   margin-right: 10px;
   width: 400px;
   height: 30px;

@@ -6,7 +6,13 @@ function SETTING_VIEW(configs) {
 		
 		return {
 			type: "SETTING",
-			com_head: new COM_HEAD("SETTING"),
+			com_head: new COM_HEAD("系統設定>進階設定"),
+			com_view: null,
+			maxItem: 10,
+			list_item: null,
+			def_item: configs['def_item'],
+			bg: configs['bg'] || null,
+			configs: configs,
 		};
 	};
 
@@ -15,33 +21,38 @@ function SETTING_VIEW(configs) {
 	};
 
 	this.methods = {
-		
+		setView: function(view) {
+			this.com_view = view;
+		},
+		onSelect: function (index) {
+			this.setView(this.list_item[index].com.view);
+		}
+	};
+
+	this.mounted = function () {
+		if(this.configs[this.id]) {
+			this.list_item = this.configs[this.id].items;
+			this.$nextTick(function () {
+				this.requestFocus();
+			});
+		}
+	};
+
+	this.props = {
+		id: null,
 	};
 
 	this.template = '\
-	<div>\
-	<div class="vbg">\
-		<div class="bg1"></div>\
-		<div class="bg2"></div>\
-		<div class="bg3"></div>\
-		<div class="bg4"></div>\
-		<div class="bg5"></div>\
-		<div class="bg6"></div>\
-		<div class="bg7"></div>\
-		<div class="bg8"></div>\
-		<div class="bg9"></div>\
-		<div class="bg10"></div>\
-		<div class="bg11"></div>\
-		<div class="bg12"></div>\
-		<div class="bg13"></div>\
-		<div class="bg14"></div>\
-	</div>\
-	<div class="" >\
-		<template>\
-			<component :is="com_head"></component>\
-		</template>\
-	</div>\
+	<div class="activeity" >\
+	<component :is="bg" ></component>\
+	<template>\
+		<component :is="com_head"></component>\
+	</template>\
+	<item-listview @select="onSelect" :imax="maxItem" :defItem="def_item" iclass="setting_table" :items="list_item" ></item-listview>\
+	<template>\
+		<component :is="com_view"></component>\
+	</template>\
 	</div>\
 	';
 }
-const com_setting = new SETTING_VIEW();
+const com_setting = new SETTING_VIEW(setting_config);

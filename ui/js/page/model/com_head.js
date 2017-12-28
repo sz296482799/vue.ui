@@ -9,12 +9,12 @@ function COM_HEAD(title) {
 			titleclass: "title",
 			timeclass: "time",
 			titletext: title,
-			timetext: "2017 12 04",
+			timetext: "2017年12月22日 14:14",
 		};
 	};
 
 	this.template = '\
-	<div>\
+	<div class="head_class">\
 		<item-textview :class="titleclass" :itext="titletext" ></item-textview>\
 		<item-textview :class="timeclass" :itext="timetext" ></item-textview>\
 	</div>\
