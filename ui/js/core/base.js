@@ -5,6 +5,18 @@ KeyEvent.KEY_UP = 38;
 KeyEvent.KEY_DOWN = 40;
 KeyEvent.KEY_LEFT = 37;
 KeyEvent.KEY_RIGHT = 39;
+
+KeyEvent.KEY_0 = 49;
+KeyEvent.KEY_1 = 50;
+KeyEvent.KEY_2 = 51;
+KeyEvent.KEY_3 = 52;
+KeyEvent.KEY_4 = 53;
+KeyEvent.KEY_5 = 54;
+KeyEvent.KEY_6 = 55;
+KeyEvent.KEY_7 = 56;
+KeyEvent.KEY_8 = 57;
+KeyEvent.KEY_9 = 58;
+
 KeyEvent.KEY_TEST = 37;
 
 function _VIEW() {
@@ -75,6 +87,67 @@ function _VIEW_GROUP() {
 			}
 			return null;
 		},
+	};
+}
+
+function _LAYOUT_LINER() {
+
+	this.extends = new _VIEW_GROUP();
+	this.data = function () {
+		return {
+			ltype: 'LAYOUT_LINER',
+			lType: 'vertical',
+		};
+	};
+
+	this.methods = {
+		bindList: function () {
+			if(!this._isMounted) {
+				return;
+			}
+			var mList = this.$children;
+			if(!mList) return;
+			for (var i = 0; i < mList.length; i++) {
+				if(this.stype === 'horizontal') {
+					if(i < mList.length - 1)
+						mList[i].rightItem = mList[i + 1];
+					else
+						mList[i].rightItem = mList[0];
+					if(i > 0)
+						mList[i].leftItem = mList[i - 1];
+					else
+						mList[i].leftItem = mList[mList.length - 1];
+				}
+				else {
+					if(i < mList.length - 1)
+						mList[i].downItem = mList[i + 1];
+					else
+						mList[i].downItem = mList[0];
+					if(i > 0)
+						mList[i].upItem = mList[i - 1];
+					else
+						mList[i].upItem = mList[mList.length - 1];
+				}
+			}
+		},
+	};
+
+	this.computed = {
+		stype: function () {
+			return this.itype || this.lType;
+		},
+	};
+
+	this.mounted = function () {
+		this.bindList();
+	};
+
+	this.updated = function () {
+		this.bindList();
+	};
+
+	this.props = {
+		itype: null,
 	};
 }
 

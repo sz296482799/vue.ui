@@ -1,5 +1,6 @@
 
 var advset_config = {
+	name:"系統設定>進階設定",
 	items: [
 		{com: new SETTING_ITEM('電影選單', new COM_MAIN_FREQ())},
 		{com: new SETTING_ITEM('影片排行榜')},

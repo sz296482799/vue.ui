@@ -72,3 +72,15 @@
 .setting_table td {
     padding: 0px;
 }
+
+.setting_button {
+    float: right;
+    margin-right: 60px;
+    margin-top: 4px;
+    width: 200px;
+    height: 48px;
+    text-align: center;
+    background: gray;
+    font-size: 24px;
+    line-height: 48px;
+}

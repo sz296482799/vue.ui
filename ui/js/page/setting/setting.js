@@ -6,7 +6,7 @@ function SETTING_VIEW(configs) {
 		
 		return {
 			type: "SETTING",
-			com_head: new COM_HEAD("系統設定>進階設定"),
+			com_head: null,
 			com_view: null,
 			maxItem: 10,
 			list_item: null,
@@ -26,11 +26,24 @@ function SETTING_VIEW(configs) {
 		},
 		onSelect: function (index) {
 			this.setView(this.list_item[index].com.view);
-		}
+		},
+		onKeyDown: function(event) {
+			var code = event.keyCode;
+			switch(code) {
+				case KeyEvent.KEY_RIGHT:
+					this.$refs.rightView.requestFocus();
+					return true;
+				case KeyEvent.KEY_LEFT:
+					this.$refs.leftList.requestFocus();
+					return true;
+			}
+			return false;
+		},
 	};
 
 	this.mounted = function () {
 		if(this.configs[this.id]) {
+			this.com_head = new COM_HEAD(this.configs[this.id].name);
 			this.list_item = this.configs[this.id].items;
 			this.$nextTick(function () {
 				this.requestFocus();
@@ -48,9 +61,9 @@ function SETTING_VIEW(configs) {
 	<template>\
 		<component :is="com_head"></component>\
 	</template>\
-	<item-listview @select="onSelect" :imax="maxItem" :defItem="def_item" iclass="setting_table" :items="list_item" ></item-listview>\
+	<item-listview @select="onSelect" :imax="maxItem" :defItem="def_item" iclass="setting_table" :items="list_item" ref="leftList" ></item-listview>\
 	<template>\
-		<component :is="com_view"></component>\
+		<component :is="com_view" ref="rightView"></component>\
 	</template>\
 	</div>\
 	';
