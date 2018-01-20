@@ -1,6 +1,9 @@
 'use strict'
 
 var KeyEvent = new Object();
+
+KeyEvent.KEY_ENTER = 13;
+
 KeyEvent.KEY_UP = 38;
 KeyEvent.KEY_DOWN = 40;
 KeyEvent.KEY_LEFT = 37;

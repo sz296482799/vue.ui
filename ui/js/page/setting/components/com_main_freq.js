@@ -15,6 +15,12 @@ function COM_MAIN_FREQ() {
 		};
 	};
 
+	this.methods = {
+		onClick: function() {
+			console.log("click");
+		},
+	};
+
 	this.template = '\
 	<div class="setting_right_view">\
 		<div class="setting_right_items">\
@@ -31,7 +37,7 @@ function COM_MAIN_FREQ() {
 				<item-inputview v-model="mValue3" class="setting_input"></item-inputview>\
 			</div>\
 			<div class="setting_right_item">\
-				<item-inputview :itext="t_main_freq1" class="setting_button"></item-inputview>\
+				<item-buttonview @iclick="onClick" :itext="t_main_freq1" class="setting_button"></item-buttonview>\
 			</div>\
 		</div>\
 	</div>\

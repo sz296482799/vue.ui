@@ -61,6 +61,6 @@ function _INPUT_VIEW(){
 	},
 
 	this.template = '<div v-text="ivalue" :class="sClass" :style="sStyle"></div>';
-	this.props = ['ivalue', 'itext', 'iclass', 'istyle'];
+	this.props = ['ivalue', 'iclass', 'istyle'];
 }
 Vue.component('item-inputview', new _INPUT_VIEW());
