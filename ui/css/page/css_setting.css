@@ -13,6 +13,11 @@
     background-color: rgba(255, 255, 255, 0.6);
 }
 
+.setting_item_fource {
+    color: white;
+    background-color: rgb(228, 105, 0);
+}
+
 .setting_right_view {
     position: absolute;
     top: 100px;

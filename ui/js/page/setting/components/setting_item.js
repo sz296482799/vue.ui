@@ -9,6 +9,7 @@ function SETTING_ITEM(text, view, isFource) {
 			itext: text,
 			itemclassodd: "setting_item_bg_odd",
 			itemclasseven: "setting_item_bg_even",
+			itemclassfource: "setting_item_fource",
 			tween: null,
 			itemstyle: {},
 			canFource: isFource,
@@ -19,7 +20,7 @@ function SETTING_ITEM(text, view, isFource) {
 		setFource: function (isTrue) {
 			if(isTrue) {
 				if(!this.tween)
-					this.tween = TweenLite.to(this.$el, 0.5,  { "color": "white", "background-color": "rgb(228, 105, 0)"});
+					this.tween = TweenLite.to(this.$el, 0.5,  { className: ("+=" + this.itemclassfource) });
 				else
 					this.tween.restart();
 				//this.itemstyle = { "color": "white", "background-color": "rgb(228, 105, 0)"};
