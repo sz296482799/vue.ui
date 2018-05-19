@@ -3,7 +3,7 @@ var advset_config = {
 	name:"系統設定>進階設定",
 	items: [
 		{com: new SETTING_ITEM('電影選單', new COM_MAIN_FREQ())},
-		{com: new SETTING_ITEM('影片排行榜')},
+		{com: new SETTING_ITEM('影片排行榜', new COM_MAIN_FREQ())},
 		{com: new SETTING_ITEM('影片搜尋', new COM_MAIN_FREQ())},
 		{com: new SETTING_ITEM('播放清單')},
 		{com: new SETTING_ITEM('系統設定')},

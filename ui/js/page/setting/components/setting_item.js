@@ -9,6 +9,7 @@ function SETTING_ITEM(text, view, isFource) {
 			itext: text,
 			itemclassodd: "setting_item_bg_odd",
 			itemclasseven: "setting_item_bg_even",
+			tween: null,
 			itemstyle: {},
 			canFource: isFource,
 		};
@@ -17,10 +18,20 @@ function SETTING_ITEM(text, view, isFource) {
 	this.methods = {
 		setFource: function (isTrue) {
 			if(isTrue) {
-				this.itemstyle = { "color": "white", "background-color": "rgb(228, 105, 0)"};
+				if(!this.tween)
+					this.tween = TweenLite.to(this.$el, 0.5,  { "color": "white", "background-color": "rgb(228, 105, 0)"});
+				else
+					this.tween.restart();
+				//this.itemstyle = { "color": "white", "background-color": "rgb(228, 105, 0)"};
 			}
 			else {
-				this.itemstyle = {};
+				if(this.tween) {
+					this.tween.reverse();
+					//or
+					//this.tween.seek(0);
+					//this.tween.pause();
+				}
+				//this.itemstyle = {};
 			}
 			return true;
 		}
