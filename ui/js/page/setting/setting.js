@@ -62,9 +62,11 @@ function SETTING_VIEW(configs) {
 		<component :is="com_head"></component>\
 	</template>\
 	<item-listview @select="onSelect" :imax="maxItem" :defItem="def_item" iclass="setting_table" :items="list_item" ref="leftList" ></item-listview>\
-	<template>\
-		<component :is="com_view" ref="rightView"></component>\
-	</template>\
+	<transition name="setting" mode="out-in">\
+		<template>\
+			<keep-alive><component :is="com_view" ref="rightView"></component></keep-alive>\
+		</template>\
+	</transition>\
 	</div>\
 	';
 }
