@@ -40,7 +40,7 @@ var setting_config = {
 	name: '系統設定',
 	items: [
 		{com: new HOME_ITEM("img/5_1.png", '頻道搜尋')},
-		{com: new HOME_ITEM("img/5_2.png", '進階設定')},
+		{com: new HOME_ITEM("img/5_2.png", '進階設定', "setting/advset")},
 		{com: new HOME_ITEM("img/5_3.png", '本機資訊')},
 		{com: new HOME_ITEM("img/5_4.png", '郵件列表')},
 		{com: new HOME_ITEM("img/5_5.png", '聯繫我們')}

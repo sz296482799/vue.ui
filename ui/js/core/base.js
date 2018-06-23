@@ -20,7 +20,7 @@ KeyEvent.KEY_7 = 56;
 KeyEvent.KEY_8 = 57;
 KeyEvent.KEY_9 = 58;
 
-KeyEvent.KEY_TEST = 37;
+KeyEvent.KEY_TEST = 255;
 
 function _VIEW() {
 
@@ -74,6 +74,9 @@ function _VIEW_GROUP() {
 			}
 			if(this.indexFource < 0) {
 				this.indexFource = 0;
+			}
+			if(this.indexFource >= this.$children.length && this.$children.length > 0) {
+				this.indexFource = this.$children.length - 1;
 			}
 			for (var i = this.indexFource; i < this.$children.length; i++) {
 				if(this.$children[i].canFource) {

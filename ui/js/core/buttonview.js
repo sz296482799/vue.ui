@@ -18,7 +18,7 @@ function _BUTTON_VIEW(){
 
 			switch(code) {
 				case KeyEvent.KEY_ENTER:
-					this.$emit("iclick", this.private_data);
+					this.$emit("bclick", this.private_data);
 					return true;
 			}
 			return false;

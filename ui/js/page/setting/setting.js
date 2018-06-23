@@ -27,6 +27,9 @@ function SETTING_VIEW(configs) {
 		onSelect: function (index) {
 			this.setView(this.list_item[index].com.view);
 		},
+		onClick: function (index) {
+			console.log("click list:" + index);
+		},
 		onKeyDown: function(event) {
 			var code = event.keyCode;
 			switch(code) {
@@ -61,7 +64,7 @@ function SETTING_VIEW(configs) {
 	<template>\
 		<component :is="com_head"></component>\
 	</template>\
-	<item-listview @select="onSelect" :imax="maxItem" :defItem="def_item" iclass="setting_table" :items="list_item" ref="leftList" ></item-listview>\
+	<item-listview @select="onSelect" @lclick="onClick" :imax="maxItem" :defItem="def_item" iclass="setting_table" :items="list_item" ref="leftList" ></item-listview>\
 	<transition name="setting" mode="out-in">\
 		<template>\
 			<keep-alive><component :is="com_view" ref="rightView"></component></keep-alive>\

@@ -47,11 +47,17 @@ function _LIST_VIEW(){
 			var code = event.keyCode;
 
 			switch(code) {
+				case KeyEvent.KEY_RIGHT:
 				case KeyEvent.KEY_DOWN:
 					this.mIndex = (this.mIndex + 1) % this.sItems.length;
 				break;
+				case KeyEvent.KEY_LEFT:
 				case KeyEvent.KEY_UP:
 					this.mIndex = (this.mIndex > 0) ? (this.mIndex - 1) : (this.sItems.length - 1);
+				break;
+
+				case KeyEvent.KEY_ENTER:
+					this.$emit("lclick", this.mIndex);
 				break;
 			}
 			
@@ -72,11 +78,16 @@ function _LIST_VIEW(){
 		});
 	};
 
-	this.updated = function () {
-		this.bindList();
-	};
-
 	this.watch = {
+		sItems: function () {
+			this.indexFource = 0;
+			this.mIndex = 0;
+			this.mFristIndex = 0;
+			this.$nextTick(function () {
+				this.bindList();
+				this.requestFocus();
+			});
+		},
 		mIndex: function () {
 			this.$emit("select", this.mIndex);
 		},
@@ -101,12 +112,14 @@ function _LIST_VIEW(){
 				if(this.mFristIndex > this.mIndex) {
 					this.mFristIndex = this.mIndex;
 					this.$nextTick(function () {
+						this.bindList();
 						this.requestFocus();
 					});
 				}
 				else if(this.mIndex > this.mFristIndex + this.sMax - 1) {
 					this.mFristIndex = this.mIndex - (this.sMax - 1);
 					this.$nextTick(function () {
+						this.bindList();
 						this.requestFocus();
 					});
 				}

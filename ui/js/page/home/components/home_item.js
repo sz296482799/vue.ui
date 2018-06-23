@@ -1,6 +1,6 @@
 'use strict'
 
-function HOME_ITEM(src, text, isFource) {
+function HOME_ITEM(src, text, route, isFource) {
 	
 	this.extends = new _VIEW_GROUP();
 	this.data = function () {
@@ -16,6 +16,7 @@ function HOME_ITEM(src, text, isFource) {
 			imgstyle: {},
 			textstyle: {},
 			canFource: isFource,
+			route: route
 		};
 	};
 

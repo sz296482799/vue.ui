@@ -37,7 +37,7 @@ function COM_MAIN_FREQ() {
 				<item-inputview v-model="mValue3" class="setting_input"></item-inputview>\
 			</div>\
 			<div class="setting_right_item">\
-				<item-buttonview @iclick="onClick" :itext="t_main_freq1" class="setting_button"></item-buttonview>\
+				<item-buttonview @bclick="onClick" :itext="t_main_freq1" class="setting_button"></item-buttonview>\
 			</div>\
 		</div>\
 	</div>\
