@@ -12,6 +12,9 @@ function APP_VIEW() {
 			{
 				path: '/setting/:id', component: com_setting, props: true,
 			},
+			{
+				path: '/test/:id', component: com_test, props: true,
+			},
 		],
 	});
 	this.extends = new _VIEW_APP();

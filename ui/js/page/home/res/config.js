@@ -1,7 +1,7 @@
 var program_config = {
 	name: '節目表',
 	items: [
-		{com: new HOME_ITEM("img/0_1.png", '節目表')},
+		{com: new HOME_ITEM("img/0_1.png", '節目表', "test/test1")},
 	],
 };
 var vod_config = {

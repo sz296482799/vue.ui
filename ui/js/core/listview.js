@@ -47,12 +47,10 @@ function _LIST_VIEW(){
 			var code = event.keyCode;
 
 			switch(code) {
-				case KeyEvent.KEY_RIGHT:
-				case KeyEvent.KEY_DOWN:
+				case this.rightdown:
 					this.mIndex = (this.mIndex + 1) % this.sItems.length;
 				break;
-				case KeyEvent.KEY_LEFT:
-				case KeyEvent.KEY_UP:
+				case this.leftup:
 					this.mIndex = (this.mIndex > 0) ? (this.mIndex - 1) : (this.sItems.length - 1);
 				break;
 
@@ -72,6 +70,14 @@ function _LIST_VIEW(){
 	};
 
 	this.mounted = function () {
+		if(this.stype === "horizontal") {
+			this.leftup = KeyEvent.KEY_LEFT;
+			this.rightdown = KeyEvent.KEY_RIGHT;
+		}
+		else {
+			this.leftup = KeyEvent.KEY_UP;
+			this.rightdown = KeyEvent.KEY_DOWN;
+		}
 		this.bindList();
 		this.$nextTick(function () {
 			this.$emit("select", this.mIndex);
